@@ -24,8 +24,8 @@ class ItemDetailViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let urlString = model.object(forKey: "artworkUrl100") as! String
-        networkManager.downloadImage(urlString: urlString, completion: {image in
-            self.ivMain.image = image
+        networkManager.downloadImage(urlString: urlString, completion: { [weak self] image in
+            self?.ivMain.image = image //will never be nil, just being cautious
         })
         lbl1.text = model.object(forKey: "artistName") as? String
         lbl2.text = model.object(forKey: "collectionName") as? String
@@ -43,6 +43,8 @@ class ItemDetailViewController : UIViewController {
         }
     }
     
-    
+    deinit {
+        print("deinit")
+    }
     
 }
